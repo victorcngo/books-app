@@ -4,28 +4,29 @@ import { useSelector, useDispatch } from 'react-redux'
 import { GET_BOOKS } from '../api/queries/books'
 
 import { useQuery } from '@apollo/client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Books() {
   /* API fetch */
-  const { data } = useQuery(GET_BOOKS)
+  const { data, loading, error } = useQuery(GET_BOOKS)
 
   useEffect(() => {
     console.log(data)
   }, [data])
 
-  /* WIP */
-  const books = useSelector((state: RootState) => state.books.items)
+  if(loading) return <p>Chargement...</p>;
+
+  if(error) return <p>Erreur (GET_BOOKS)</p>;
 
   return (
     <section>
       <div>
         <h2>Book list</h2>
         <ul>
-          {books.map((elem, index) => {
+          {data.books.map((elem:any, index:number) => {
             return (
               <li key={index}>
-                {elem.title} (id: {elem.id})
+                {elem.title} (id: {elem.id}) author: {elem.author} , rating: {elem.rate} / 20
               </li>
             )
           })}
