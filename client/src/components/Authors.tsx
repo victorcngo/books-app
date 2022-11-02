@@ -13,7 +13,7 @@ export default function Authors() {
 
   if (loading) return <p>Chargement...</p>
 
-  if (error) return <p>Erreur (GET_BOOKS)</p>
+  if (error) return <p>Erreur (GET_AUTHORS)</p>
 
   interface Author {
     author: string
