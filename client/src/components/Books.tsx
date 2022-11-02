@@ -20,7 +20,7 @@ export default function Books() {
   return (
     <section>
       <div>
-        <h2>Books in app store</h2>
+        <h2>Book list</h2>
         <ul>
           {books.map((elem, index) => {
             return (
