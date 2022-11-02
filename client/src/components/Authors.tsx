@@ -1,24 +1,18 @@
 import { GET_AUTHORS } from '../api/queries/authors'
-
 import { useQuery } from '@apollo/client'
-import { useEffect } from 'react'
+
+interface Author {
+  author: string
+  id: number
+}
 
 export default function Authors() {
   /* API fetch */
   const { data, loading, error } = useQuery(GET_AUTHORS)
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   if (loading) return <p>Chargement...</p>
 
   if (error) return <p>Erreur (GET_AUTHORS)</p>
-
-  interface Author {
-    author: string
-    id: number
-  }
 
   return (
     <section>
