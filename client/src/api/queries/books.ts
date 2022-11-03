@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export const GET_BOOKS = gql`
+export const GET_BOOKS = `
   query Books {
     books {
       id
