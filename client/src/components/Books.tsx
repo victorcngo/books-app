@@ -1,13 +1,6 @@
-import { GET_BOOKS } from '../api/queries/books'
-import { useQuery } from '@apollo/client'
-
 import type { RootState } from './../store'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { AppDispatch } from './../store'
-import { useEffect } from 'react'
-
-import { fetchBooks } from '../store/books/booksSlice'
+import { useSelector } from 'react-redux'
 
 export interface Book {
   id: number
@@ -18,17 +11,11 @@ export interface Book {
 
 export default function Books() {
   const items = useSelector((state: RootState) => state.books.items)
-  const dispatch = useDispatch<AppDispatch>()
+  const status = useSelector((state: RootState) => state.books.loading)
 
-  useEffect(() => {
- 
-    dispatch(fetchBooks())
-    console.log(items);
-    
-    }, []);
-  // if (loading) return <p>Chargement...</p>
+  if (status === "pending") return <p>Chargement...</p>
 
-  // if (error) return <p>Erreur (GET_BOOKS)</p>
+  if (status === "failed") return <p>Erreur (GET_BOOKS)</p>
 
   return (
     <section>

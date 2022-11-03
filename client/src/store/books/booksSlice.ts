@@ -35,13 +35,16 @@ export const booksSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchBooks.fulfilled, (state, action: any) => {
-      state.items.push(action.payload)
+      state.items.push(...action.payload.data.books)
+      state.loading = 'succeeded'
       console.log(action.payload.data.books)
     })
     builder.addCase(fetchBooks.rejected, (state, action) => {
+      state.loading = 'failed'
       console.log('Rejected')
     })
     builder.addCase(fetchBooks.pending, (state, action) => {
+      state.loading = 'pending'
       console.log('Pending')
     })
   },
