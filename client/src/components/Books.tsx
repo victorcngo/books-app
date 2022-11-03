@@ -1,7 +1,14 @@
 import { GET_BOOKS } from '../api/queries/books'
 import { useQuery } from '@apollo/client'
 
-interface Book {
+import type { RootState } from './../store'
+
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+
+import { fetchBooks } from '../store/books/booksSlice'
+
+export interface Book {
   id: number
   title: string
   author: string
@@ -9,19 +16,21 @@ interface Book {
 }
 
 export default function Books() {
-  /* API fetch */
-  const { data, loading, error } = useQuery(GET_BOOKS)
+  const items = useSelector((state: RootState) => state.books.items)
+  const dispatch = useDispatch()
 
-  if (loading) return <p>Chargement...</p>
+  // dispatch(fetchBooks())
 
-  if (error) return <p>Erreur (GET_BOOKS)</p>
+  // if (loading) return <p>Chargement...</p>
+
+  // if (error) return <p>Erreur (GET_BOOKS)</p>
 
   return (
     <section>
       <div>
         <h2>Book list</h2>
         <ul>
-          {data.books.map((elem: Book, index: number) => {
+          {items.map((elem: Book, index: number) => {
             return (
               <li key={index}>
                 {elem.title} (id: {elem.id}) author: {elem.author} , rating:{' '}
