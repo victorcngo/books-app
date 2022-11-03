@@ -1,7 +1,7 @@
 import { GET_BOOKS } from '../api/queries/books'
 import { useQuery } from '@apollo/client'
 
-interface BookType {
+interface Book {
   id: number
   title: string
   author: string
@@ -21,7 +21,7 @@ export default function Books() {
       <div>
         <h2>Book list</h2>
         <ul>
-          {data.books.map((elem: BookType, index: number) => {
+          {data.books.map((elem: Book, index: number) => {
             return (
               <li key={index}>
                 {elem.title} (id: {elem.id}) author: {elem.author} , rating:{' '}
