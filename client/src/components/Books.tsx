@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client'
 import type { RootState } from './../store'
 
 import { useSelector, useDispatch } from 'react-redux'
+import { AppDispatch } from './../store'
 import { useEffect } from 'react'
 
 import { fetchBooks } from '../store/books/booksSlice'
@@ -17,10 +18,14 @@ export interface Book {
 
 export default function Books() {
   const items = useSelector((state: RootState) => state.books.items)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
-  // dispatch(fetchBooks())
-
+  useEffect(() => {
+ 
+    dispatch(fetchBooks())
+    console.log(items);
+    
+    }, []);
   // if (loading) return <p>Chargement...</p>
 
   // if (error) return <p>Erreur (GET_BOOKS)</p>

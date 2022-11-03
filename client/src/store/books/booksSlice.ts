@@ -1,16 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { useQuery } from '@apollo/client'
 import { GET_BOOKS } from '../../api/queries/books'
-import { Book } from './../../components/Books'
 
 import axios from 'axios'
 
 export const fetchBooks = createAsyncThunk(
   'books/getBooks',
-  async (obj, thunkAPI): Promise<any[]> => {
+  async (): Promise<any[]> => {
     const response = await axios('http://localhost:4000', {
-      method: 'post',
+      method: 'POST',
       data: {
         query: GET_BOOKS,
       },
@@ -37,8 +34,15 @@ export const booksSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchBooks.fulfilled, (state, action) => {
+    builder.addCase(fetchBooks.fulfilled, (state, action: any) => {
       state.items.push(action.payload)
+      console.log(action.payload.data.books)
+    })
+    builder.addCase(fetchBooks.rejected, (state, action) => {
+      console.log('Rejected')
+    })
+    builder.addCase(fetchBooks.pending, (state, action) => {
+      console.log('Pending')
     })
   },
 })
