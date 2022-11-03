@@ -1,31 +1,32 @@
-import type { RootState } from '../store'
-import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from './../store'
 
-import { GET_BOOKS } from '../api/queries/books'
+import { useSelector } from 'react-redux'
 
-import { useQuery } from '@apollo/client'
-import { useEffect } from 'react'
+export interface Book {
+  id: number
+  title: string
+  author: string
+  rate: number
+}
 
 export default function Books() {
-  /* API fetch */
-  const { data } = useQuery(GET_BOOKS)
+  const items = useSelector((state: RootState) => state.books.items)
+  const status = useSelector((state: RootState) => state.books.loading)
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
+  if (status === "pending") return <p>Chargement...</p>
 
-  /* WIP */
-  const books = useSelector((state: RootState) => state.books.items)
+  if (status === "failed") return <p>Erreur (GET_BOOKS)</p>
 
   return (
     <section>
       <div>
-        <h2>Books in app store</h2>
+        <h2>Book list</h2>
         <ul>
-          {books.map((elem, index) => {
+          {items.map((elem: Book, index: number) => {
             return (
               <li key={index}>
-                {elem.title} (id: {elem.id})
+                {elem.title} (id: {elem.id}) author: {elem.author} , rating:{' '}
+                {elem.rate} / 20
               </li>
             )
           })}
